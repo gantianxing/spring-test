@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 不需要依赖的id，可以不用指定-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:test.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="testDbSource" class="com.sky.locale.dao.jdbc.TestJdbcSource">
+        <constructor-arg name="uri" value="${jdbc.url}"/>
+        <constructor-arg name="userName" value="${jdbc.username}"/>
+        <constructor-arg name="password" value="${jdbc.password}"/>
+    </bean>
+</beans>

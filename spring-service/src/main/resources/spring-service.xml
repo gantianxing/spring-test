@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+
+       <!-- 相对于JavaConfig 配置方式 -->
+
+       <!-- 不指定id，默认id为：com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl#0 -->
+       <bean class="com.sky.locale.dao.explicit.impl.ExplicitTestDaoImpl" />
+
+       <bean id="explicitTestDao" class="com.sky.locale.dao.explicit.impl.ExplicitTestDaoImpl" />
+
+       <!-- 构造方法方式注入 -->
+       <bean id="explicitTestService" class="com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl">
+              <constructor-arg name="explicitTestDao" ref="explicitTestDao"/>
+       </bean>
+
+       <!-- c命名空间方式注入 相对简洁 -->
+       <bean id="explicitTestService1" class="com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl"
+             c:explicitTestDao-ref="explicitTestDao" />
+
+       <!-- setter注入-->
+       <bean id="explicitTestService2" class="com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl">
+              <property name="explicitTestDao" ref="explicitTestDao"/>
+              <property name="name" value="123"/>
+              <property name="books">
+                     <list>
+                            <value>monkeys</value>
+                            <value>pigs</value>
+                     </list>
+              </property>
+       </bean>
+
+       <!-- p 命名空间注入 -->
+       <bean id="explicitTestService3" class="com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl"
+               p:explicitTestDao-ref="explicitTestDao"
+               p:name="123">
+              <property name="books">
+                     <list>
+                            <value>monkeys</value>
+                            <value>pigs</value>
+                     </list>
+              </property>
+
+       </bean>
+
+       <!-- 使用util:list把list转移出去 -->
+       <bean id="explicitTestService5" class="com.sky.locale.service.explicit.impl.ExplicitTestServiceImpl"
+             p:explicitTestDao-ref="explicitTestDao"
+             p:name="123"
+             p:books-ref="books">
+       </bean>
+
+       <util:list id="books">
+              <value>monkeys</value>
+              <value>pigs</value>
+       </util:list>
+
+</beans>
